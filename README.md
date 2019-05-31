@@ -6,6 +6,10 @@ you the hassle of building a base image yourself.
 To make things easier for non-docker gurus, the appliances run systemd,
 allowing the starting of services just like any other machine.
 
+The entirety or /etc is persisted by GNS3 by exposing it as a Docker volume.
+This ain't the prettiest, but this way you do not need a specific VOLUME
+directive for each configuration file you wish to persist.
+
 ## The host
 
 The host is a centos 7 base image, with common networking tools like
