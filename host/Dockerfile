@@ -11,5 +11,9 @@ RUN yum install -y iproute2 dhclient vim \
 # Enable autologin as root
 COPY console-getty.override.conf /etc/systemd/system/console-getty.service.d/override.conf
 
+# Persist configuration files for GNS3
 VOLUME /etc
+
+VOLUME ["/sys/fs/cgroup"]
+
 CMD ["/usr/sbin/init"]
