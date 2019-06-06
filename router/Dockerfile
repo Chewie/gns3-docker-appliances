@@ -6,7 +6,7 @@ RUN yum install -y epel-release
 
 RUN yum install -y iproute2 dhclient vim \
     nano bind-utils net-tools \
-    dhcp bind bird2 iptables-services \
+    dhcp bind bird2 iptables-services radvd \
     && yum clean all
 
 # Remove networking scripts that came with networking packages
