@@ -9,7 +9,7 @@ RUN yum install -y iproute2 dhclient vim \
     && yum clean all
 
 # Remove networking scripts that came with networking packages
-RUN rm -f /etc/rc.d/**/*
+RUN rm -f /etc/rc.d/**/network
 
 # Remove unnecessary bloat, as suggest by the official image docs
 RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
