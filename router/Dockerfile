@@ -36,6 +36,4 @@ RUN ln -s /usr/lib/systemd/system/iptables.service /etc/systemd/system/basic.tar
 # Persist configuration files for GNS3
 VOLUME /etc
 
-VOLUME ["/sys/fs/cgroup"]
-
 CMD ["/usr/sbin/init"]

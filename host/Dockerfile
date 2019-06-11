@@ -30,6 +30,4 @@ COPY console-getty.override.conf /etc/systemd/system/console-getty.service.d/ove
 # Persist configuration files for GNS3
 VOLUME /etc
 
-VOLUME ["/sys/fs/cgroup"]
-
 CMD ["/usr/sbin/init"]
