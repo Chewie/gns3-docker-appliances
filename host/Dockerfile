@@ -6,6 +6,7 @@ RUN yum install -y epel-release
 
 RUN yum install -y iproute2 dhclient vim \
     nano bind-utils net-tools \
+    nginx \
     && yum clean all
 
 # Remove networking scripts that came with networking packages
