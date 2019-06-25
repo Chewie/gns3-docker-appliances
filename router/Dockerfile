@@ -31,7 +31,7 @@ COPY console-getty.override.conf /etc/systemd/system/console-getty.service.d/ove
 COPY iptables_default /etc/sysconfig/iptables
 
 # Enable iptables restore at boot
-RUN ln -s /usr/lib/systemd/system/iptables.service /etc/systemd/system/basic.target.wants/iptables.service
+RUN cp /usr/lib/systemd/system/iptables.service /etc/systemd/system/basic.target.wants/iptables.service
 
 # Persist configuration files for GNS3
 VOLUME /etc
