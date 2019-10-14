@@ -28,6 +28,9 @@ ln -s /lib/systemd/system/console-getty.service \
 # Enable autologin as root
 COPY console-getty.override.conf /etc/systemd/system/console-getty.service.d/override.conf
 
+# Add /etc/shadow entry for root
+COPY shadow /etc/shadow
+
 COPY iptables_default /etc/sysconfig/iptables
 
 # Enable iptables restore at boot
