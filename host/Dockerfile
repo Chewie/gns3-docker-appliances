@@ -7,12 +7,13 @@ RUN yum install -y epel-release
 RUN yum install -y iproute2 dhclient vim \
     nano bind-utils net-tools \
     nginx \
-    && yum clean all
+    && yum clean all \
+    && rm -rf /var/cache/yum
 
 # Remove networking scripts that came with networking packages
-RUN rm -f /etc/rc.d/**/network
+RUN rm -rf /etc/rc.d/**/network /etc/sysconfig/network-scripts
 
-# Remove unnecessary bloat, as suggest by the official image docs
+# Remove unnecessary bloat, as suggested by the official image docs
 RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
 systemd-tmpfiles-setup.service ] || rm -f $i; done); \
 rm -f /lib/systemd/system/multi-user.target.wants/*;\
@@ -32,6 +33,7 @@ COPY console-getty.override.conf /etc/systemd/system/console-getty.service.d/ove
 COPY shadow /etc/shadow
 
 # Persist configuration files for GNS3
-VOLUME /etc
+VOLUME /etc/sysconfig
+VOLUME /etc/systemd/system
 
 CMD ["/usr/sbin/init"]
