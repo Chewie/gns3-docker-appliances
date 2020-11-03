@@ -6,19 +6,23 @@ you the hassle of building a base image yourself.
 To make things easier for non-docker gurus, the appliances run systemd,
 allowing the starting of services just like any other machine.
 
-The entirety or /etc is persisted by GNS3 by exposing it as a Docker volume.
-This ain't the prettiest, but this way you do not need a specific VOLUME
-directive for each configuration file you wish to persist.
 
 ## The host
 
-The host is a centos 7 base image, with common networking tools like
+The host is a centos 8 base image, with common networking tools like
 `iproute2` and `bind-utils` installed.
+
+The following directories are persisted through VOLUMEs:
+    * `/etc/sysconfig`
 
 ## The router
 
 The router is very similar to the host image, but also ships with the ISC DHCP
-server, BIND, and the BIRD2 routing daemon.
+server, BIND, radvd, and the BIRD2 routing daemon.
+
+The following directories are persisted through VOLUMEs:
+    * `/etc/sysconfig`
+    * `/etc/bird` (an override moves the bird.conf from `/etc/` to this directory)
 
 
 ### Acknowledgements

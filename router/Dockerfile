@@ -1,12 +1,12 @@
-FROM centos:7
+FROM centos:8
 
 ENV container docker
 
 RUN yum install -y epel-release
 
-RUN yum install -y iproute2 dhclient vim \
+RUN yum install -y iproute dhclient vim \
     nano bind-utils net-tools \
-    dhcp bind bird2 iptables-services radvd \
+    dhcp-relay dhcp-server bird iptables-services radvd \
     && yum clean all \
     && rm -rf /var/cache/yum
 
@@ -23,6 +23,9 @@ rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
 rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
 rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*; \
+systemctl unmask console-getty; \
+ln -s /lib/systemd/system/systemd-user-sessions.service \
+/lib/systemd/system/multi-user.target.wants;\
 ln -s /lib/systemd/system/console-getty.service \
 /lib/systemd/system/multi-user.target.wants;
 
@@ -36,7 +39,8 @@ COPY shadow /etc/shadow
 COPY iptables_default /etc/sysconfig/iptables
 
 # Enable iptables restore at boot
-RUN cp /usr/lib/systemd/system/iptables.service /etc/systemd/system/basic.target.wants/iptables.service
+RUN mkdir -p /etc/systemd/system/basic.target.wants; \
+ln -s /usr/lib/systemd/system/iptables.service /etc/systemd/system/basic.target.wants/iptables.service
 
 # Store bird config in /etc/bird/bird.conf instead of /etc/bird.conf
 COPY bird.override.conf /etc/systemd/system/bird.service.d/override.conf
@@ -44,7 +48,6 @@ RUN mkdir -p /etc/bird && mv /etc/bird.conf /etc/bird/bird.conf
 
 # Persist configuration files for GNS3
 VOLUME /etc/sysconfig
-VOLUME /etc/systemd/system
 VOLUME /etc/bird
 
 CMD ["/usr/sbin/init"]
