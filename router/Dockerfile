@@ -46,6 +46,9 @@ ln -s /usr/lib/systemd/system/iptables.service /etc/systemd/system/basic.target.
 COPY bird.override.conf /etc/systemd/system/bird.service.d/override.conf
 RUN mkdir -p /etc/bird && mv /etc/bird.conf /etc/bird/bird.conf
 
+# Change the default colorscheme, because solarputty is shit
+RUN echo 'colorscheme desert' > /root/.vimrc
+
 # Persist configuration files for GNS3
 VOLUME /etc/sysconfig
 VOLUME /etc/bird

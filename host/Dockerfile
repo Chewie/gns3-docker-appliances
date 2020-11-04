@@ -35,6 +35,9 @@ COPY console-getty.override.conf /etc/systemd/system/console-getty.service.d/ove
 # Add /etc/shadow entry for root
 COPY shadow /etc/shadow
 
+# Change the default colorscheme, because solarputty is shit
+RUN echo 'colorscheme desert' > /root/.vimrc
+
 # Persist configuration files for GNS3
 VOLUME /etc/sysconfig
 
