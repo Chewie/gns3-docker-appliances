@@ -15,6 +15,16 @@ The host is a centos 8 base image, with common networking tools like
 The following directories are persisted through VOLUMEs:
     * `/etc/sysconfig`
 
+## The server
+
+Exactly like the host, but ships with NGINX enabled, that returns a JSON
+containing the client's IP and the server hostname on each query.
+
+When symlinks will be handled in project exports, this appliance will probably disappear.
+
+The following directories are persisted through VOLUMEs:
+    * `/etc/sysconfig`
+
 ## The router
 
 The router is very similar to the host image, but also ships with the ISC DHCP
